@@ -182,3 +182,55 @@ docker docker run -p 8080:8080 --name backend-sever --network <network_name>
 
 now you can send get request to the server at http://localhost:8080/ and it will save the entry to the database
 as the server will be able to connect to the database over the common network
+
+#### Note
+
+- the image is required to run a container that is build from that image
+
+### Multi Stage Builds
+
+Q: What if we want to allow the dev backend to hot reload?
+But the prod env to not?
+
+Ans: We create Multi Stage Builds to be able to spin two or more different images (development and production) using the same Dockerfile
+
+```Dockerfile
+FROM node:20 AS base
+WORKDIR /usr/src/app
+
+COPY package* .
+
+RUN npm i
+
+FROM base AS development
+COPY . .
+CMD ["npm","run", "dev"]
+
+FROM base AS test
+COPY . .
+CMD ["npm","run", "dev"]
+
+FROM base AS production
+COPY . .
+RUN npm prune --production
+CMD ["npm", "run", "start"]
+
+```
+
+#### Building dev
+
+```bash
+docker build
+--target development
+-t my_app:dev
+.
+```
+
+```bash
+docker run
+-e MONGO_URI=mongodb://localhost:27017/
+my_database
+-p 3000:3000
+-v .:/usr/src/app # mounts the working directory to as the volume of the container, so any changes made in the working directory (on local machine) get propagated to the container, and vice versa(any changes the docker container makes to the files or we make by going inside the terminal get propagated to the local machine working directory (which we set in the 2nd step of Dockerfile))
+my_app:dev
+```
