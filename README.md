@@ -32,7 +32,7 @@ docker run -d <image_name> # runs the container in detached mode( basically the 
 docker logs <container_id / or a few starting characters of the container id just enough to separate it from the rest of the containers> # shows the logs of the container
 docker logs --follow <container_id /....> # to show the current logs of the container and keep on showing the logs as they are created
 
-docker compose up # create and start all the containers and services mentioned in the yaml file
+docker compose up # create and start all the containers and services mentioned in the compose.yaml file
 
 ```
 
