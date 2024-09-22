@@ -276,3 +276,10 @@ services:
 volumes:
   volume-name:
 ```
+
+## References
+
+Youtube Videos of DevOps by [Harkirat](https://github.com/hkirat)
+
+- [part-1](https://youtu.be/fSmLiOMp2qI)
+- [part-2](https://youtu.be/KuCwrySinqI)
