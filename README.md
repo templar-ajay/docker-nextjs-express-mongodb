@@ -28,6 +28,10 @@ docker volume rm <volume_name> # deletes a docker volume
 docker exec -it <container_name> /bin/bash # puts us inside the bash shell of the container
 docker exec -it busybox sh # puts us inside the bash shell of the container busybox
 
+docker run -d <image_name> # runs the container in detached mode( basically the terminal will available for further use after starting the container)
+docker logs <container_id / or a few starting characters of the container id just enough to separate it from the rest of the containers> # shows the logs of the container
+docker logs --follow <container_id /....> # to show the current logs of the container and keep on showing the logs as they are created
+
 ```
 
 ### creating an image for express server
@@ -233,4 +237,42 @@ my_database
 -p 3000:3000
 -v .:/usr/src/app # mounts the working directory to as the volume of the container, so any changes made in the working directory (on local machine) get propagated to the container, and vice versa(any changes the docker container makes to the files or we make by going inside the terminal get propagated to the local machine working directory (which we set in the 2nd step of Dockerfile))
 my_app:dev
+```
+
+### Docker Compose
+
+The problem -
+A project has a lot of auxiliary services it needs to use
+For example, MongoDB/Postgres/Kafka/MySQL ...
+
+The solution -
+Docker Compose is a tool for defining and running multi-container Docker Applications.
+With Docker Compose a YAML file is used to configure the application's services.
+Then with a single command, all the services from the configuration of the application can be created and started.
+
+- All the containers created using the docker compose are already connected via a network and can be referenced by their name
+
+_.example._
+
+```yaml
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - volume-name:/data/db
+
+  backend:
+    build: ./backend/
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend/
+    ports:
+      - "3000:3000"
+
+volumes:
+  volume-name:
 ```
