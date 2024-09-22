@@ -36,7 +36,7 @@ docker logs --follow <container_id /....> # to show the current logs of the cont
 
 ### creating an image for express server
 
-_dockerfile_
+#### Dockerfile
 
 ```Dockerfile
 FROM node:20 # or alpine-node:20   # it pulls a base image to start with
@@ -58,7 +58,7 @@ EXPOSE <port_number_to_expose>
 CMD ["npm", "start"]    # runs when the container starts
 ```
 
-_.dockerignore_
+#### .dockerignore
 
 ```.dockerignore
 node_modules
@@ -77,7 +77,7 @@ docker build
 ```bash
 docker run
  -p <port_of_local_machine>:<port_of_docker_container> # to forward all the requests coming to the machine on the specified port to the container on the specified port
- --name <container_name> <image_name> # to organise the images otherwise a random id and name will be given to the image
+ --name <container_name> <image_name> # to organize the images otherwise a random id and name will be given to the image
 ```
 
 ### starting an already built container
@@ -135,7 +135,7 @@ app.get("/", async (req, res) => {
     await entry.save();
     res.send("New Entry Saved");
   } catch (err) {
-    res.send(500).send("Error Occured");
+    res.send(500).send("Error Occurred");
   }
 });
 
@@ -184,7 +184,7 @@ to run the container from image
 docker docker run -p 8080:8080 --name backend-sever --network <network_name>
 ```
 
-now you can send get request to the server at http://localhost:8080/ and it will save the entry to the database
+now you can send get request to the server at [http://localhost:8080/]([http://localhost:8080/]) and it will save the entry to the database
 as the server will be able to connect to the database over the common network
 
 #### Note
